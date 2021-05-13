@@ -5,7 +5,7 @@ const connect = require('./db/db')
 
 const app = express()
 
-app.use(express.json())
+app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }))
@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/create', (req, res) => {
-    User.findOne({ "email": req.body.email })
+    User.findOne({ email: req.body.email })
         .then(user => {
             let userFound = user
             if (userFound == null) {
