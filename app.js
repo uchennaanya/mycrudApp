@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 app.post('/create', (req, res) => {
     User.findOne({ "email": req.body.email })
         .then(user => {
-            if (user) {
+            if (user.email == req.body.email) {
                 res.send({
                     "msg": "user already exist",
                     "res": user

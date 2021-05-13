@@ -15,6 +15,6 @@ const CrudSchema = mongoose.Schema({
     }
 })
 
-const User = mongoose.model('userTable', CrudSchema)
+const User = mongoose.model('usertable', CrudSchema)
 
 module.exports = User
