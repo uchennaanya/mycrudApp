@@ -17,26 +17,26 @@ app.get('/', (req, res) => {
 });
 
 app.post('/create', (req, res) => {
-    User.findOne({ email: req.body.email })
+    User.findOne({ "email": req.body.email })
         .then(user => {
-            res.send({ user })
-            // if (user.email == req.body.email) {
-            //     res.send({
-            //         "msg": "user already exist",
-            //         "res": user
-            //     })
-            // } else {
-            User.create({
-                name: req.body.name,
-                email: req.body.email,
-                country: req.body.country
-            }).then(user => {
+            let userFound = user
+            if (userFound == null) {
                 res.send({
-                    "msg": "Created",
+                    "msg": "user already exist",
                     "res": user
                 })
-            })
-        }
+            } else {
+                User.create({
+                    name: req.body.name,
+                    email: req.body.email,
+                    country: req.body.country
+                }).then(user => {
+                    res.send({
+                        "msg": "Created",
+                        "res": user
+                    })
+                })
+            }
         }).catch(err => {
             res.send({
                 "msg": "Failed",
