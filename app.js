@@ -19,13 +19,9 @@ app.get('/', (req, res) => {
 app.post('/create', (req, res) => {
     User.findOne({ email: req.body.email })
         .then(user => {
-            let userFound = user
-            if (userFound == null) {
-                res.send({
-                    "msg": "user already exist",
-                    "res": user
-                })
-            } else {
+
+            if (user == null) {
+
                 User.create({
                     name: req.body.name,
                     email: req.body.email,
@@ -37,12 +33,14 @@ app.post('/create', (req, res) => {
                     })
                 })
             }
+
         }).catch(err => {
             res.send({
                 "msg": "Failed",
                 "res": err.message
             })
         })
+    User.create()
 });
 
 app.get('/guetusers', (req, res) => {
