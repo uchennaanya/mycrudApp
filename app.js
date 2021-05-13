@@ -19,23 +19,24 @@ app.get('/', (req, res) => {
 app.post('/create', (req, res) => {
     User.findOne({ email: req.body.email })
         .then(user => {
-            if (user.email == req.body.email) {
+            res.send({ user })
+            // if (user.email == req.body.email) {
+            //     res.send({
+            //         "msg": "user already exist",
+            //         "res": user
+            //     })
+            // } else {
+            User.create({
+                name: req.body.name,
+                email: req.body.email,
+                country: req.body.country
+            }).then(user => {
                 res.send({
-                    "msg": "user already exist",
+                    "msg": "Created",
                     "res": user
                 })
-            } else {
-                User.create({
-                    name: req.body.name,
-                    email: req.body.email,
-                    country: req.body.country
-                }).then(user => {
-                    res.send({
-                        "msg": "Created",
-                        "res": user
-                    })
-                })
-            }
+            })
+        }
         }).catch(err => {
             res.send({
                 "msg": "Failed",
