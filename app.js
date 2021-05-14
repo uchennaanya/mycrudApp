@@ -20,18 +20,28 @@ app.post('/create', (req, res) => {
     User.findOne({ email: req.body.email })
         .then(user => {
 
-            if (user == null) {
-
-                User.create({
+            if (!user) {
+                let newUser = new User({
                     name: req.body.name,
                     email: req.body.email,
                     country: req.body.country
-                }).then(user => {
-                    res.send({
-                        "msg": "Created",
-                        "res": user
-                    })
                 })
+                newUser.save()
+                    .then(user => {
+                        res.send({
+                            "msg": "Sucess!",
+                            "res": user
+                        })
+                    })
+
+
+            } else {
+                res.send({
+                    "msg": "User already exist",
+                    "res": user
+                })
+
+
             }
 
         }).catch(err => {
